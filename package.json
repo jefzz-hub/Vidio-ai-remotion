@@ -6,7 +6,11 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "prepare:final": "node scripts/prepare-penjaga-final.mjs",
+    "dev:final": "npm run prepare:final && remotion studio src/penjaga-final-entry.tsx --no-open",
+    "render:final": "node scripts/render-penjaga-final.mjs",
+    "frames:final": "node scripts/render-penjaga-final.mjs --frames"
   },
   "repository": {},
   "license": "UNLICENSED",

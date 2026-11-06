@@ -2,12 +2,14 @@ import { Composition, Folder } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
+import { PenjagaFinalCompositions } from "./PenjagaLilinFinal/registration";
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <PenjagaFinalCompositions />
       <Folder name="Elements">
         <Composition
           id="Logo"
