@@ -1,33 +1,33 @@
 {
-  "name": "template-helloworld",
+  "name": "kelir-sunyi-remotion",
   "version": "1.0.0",
-  "description": "My Remotion video",
+  "private": true,
+  "description": "Folklor horor Indonesia bergaya kelir 2D",
   "scripts": {
-    "dev": "remotion studio",
-    "build": "remotion bundle",
-    "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "setup": "bash scripts/setup.sh",
+    "dev": "remotion studio --port=3000 --no-open",
+    "check": "node scripts/validate.mjs && tsc --noEmit && node scripts/export-text.mjs",
+    "render:test": "npm run check && remotion render src/index.ts KetukanDariKolong out/ketukan-test.mp4 --frames=0-299 --scale=0.5 --codec=h264 --pixel-format=yuv420p --concurrency=1",
+    "render:draft": "npm run check && remotion render src/index.ts KetukanDariKolong out/ketukan-draft.mp4 --scale=0.5 --codec=h264 --pixel-format=yuv420p --concurrency=1",
+    "render:final": "npm run check && remotion render src/index.ts KetukanDariKolong out/ketukan-final.mp4 --codec=h264 --pixel-format=yuv420p --concurrency=1",
+    "render:stills": "npm run check && node scripts/stills.mjs",
+    "lock": "npm install --package-lock-only --ignore-scripts"
   },
-  "repository": {},
-  "license": "UNLICENSED",
   "dependencies": {
-    "@remotion/cli": "^4.0.0",
-    "@remotion/zod-types": "^4.0.0",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "remotion": "^4.0.0",
-    "zod": "4.6.7"
+    "@remotion/cli": "4.0.541",
+    "@remotion/zod-types": "4.0.541",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.541",
+    "zod": "4.1.12"
   },
   "devDependencies": {
-    "@remotion/eslint-config-flat": "^4.0.0",
-    "@types/react": "19.3.0",
-    "@types/web": "0.0.166",
-    "eslint": "10.12.0",
-    "prettier": "3.8.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@types/node": "22.15.30",
     "typescript": "5.9.3"
   },
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24"
-  },
-  "private": true
+    "node": ">=22 <25"
+  }
 }

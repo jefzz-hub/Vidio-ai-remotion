@@ -1,0 +1,10 @@
+{
+ "name":"Kelir Sunyi — Remotion Android",
+ "build":{"dockerfile":"Dockerfile"},
+ "forwardPorts":[3000],
+ "portsAttributes":{"3000":{"label":"Remotion Studio — Kelir Sunyi","onAutoForward":"notify","visibility":"private"}},
+ "postCreateCommand":"bash scripts/setup.sh",
+ "postStartCommand":"echo 'Buka Terminal: npm run dev; lalu tab PORTS -> 3000'",
+ "customizations":{"vscode":{"extensions":["dbaeumer.vscode-eslint","esbenp.prettier-vscode","ms-vscode.vscode-typescript-next"]}},
+ "remoteUser":"node"
+}

@@ -1,0 +1,46 @@
+name: Kelir Sunyi – validate and test render
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/kelir/**'
+      - 'src/Root.tsx'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/**'
+      - '.github/workflows/kelir-ci.yml'
+permissions:
+  contents: write
+jobs:
+  render-test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate lockfile if needed
+        shell: bash
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "chore: lock Remotion npm dependencies" || true
+            git push || echo "Tidak bisa push lockfile: simpan manual dari Codespaces."
+          fi
+      - run: npm ci --no-audit --no-fund
+      - run: npx remotion browser ensure
+      - run: npm run check
+      - run: npm run render:test
+      - name: Probe output
+        run: |
+          ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json out/ketukan-test.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 out/ketukan-test.mp4 | grep '^540,960$'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ketukan-test-10-detik
+          path: out/ketukan-test.mp4
+          retention-days: 7
