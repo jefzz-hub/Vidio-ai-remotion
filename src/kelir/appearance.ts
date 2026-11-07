@@ -1,0 +1,3 @@
+export const PALETTE={ink:'#100B08',shadow:'#302015',wood:'#805125',amber:'#E7AA53',flame:'#FFF0BD',night:'#24313F',shawl:'#DCC4A1',gold:'#CCA46A'} as const;
+export const CHARACTER_PRESETS={rani:{height:352,shoulder:33,skirt:68,bun:17,coat:'#100B08',shawl:'#DCC4A1'},nenek:{height:308,shoulder:27,skirt:53,bun:13,coat:'#1B110C',shawl:'#624533'}} as const;
+export type Preset=keyof typeof CHARACTER_PRESETS;
