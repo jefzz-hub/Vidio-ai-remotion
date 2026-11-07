@@ -8,6 +8,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'scripts/**'
+      - 'public/audio/**'
       - '.github/workflows/kelir-ci.yml'
 permissions:
   contents: write
@@ -20,16 +21,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Generate lockfile if needed
+      - name: Refresh committed lockfile
         shell: bash
         run: |
-          if [ ! -f package-lock.json ]; then
-            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          if ! git diff --quiet -- package-lock.json; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add package-lock.json
-            git commit -m "chore: lock Remotion npm dependencies" || true
-            git push || echo "Tidak bisa push lockfile: simpan manual dari Codespaces."
+            git commit -m "chore: refresh Remotion npm lockfile"
+            git push || echo "Tidak bisa push lockfile; commit dari Codespaces."
           fi
       - run: npm ci --no-audit --no-fund
       - run: npx remotion browser ensure
