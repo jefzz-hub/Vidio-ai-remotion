@@ -25,6 +25,7 @@ export const EpisodeVideo:React.FC=()=>{
  return <AbsoluteFill style={{backgroundColor:'#100B08',overflow:'hidden'}}>
  {ep.shots.map(shot=><Sequence key={shot.id} from={Math.round(shot.start*fps)} durationInFrames={Math.round(shot.duration*fps)}><ShotScene shot={shot} seed={ep.seed}/></Sequence>)}
  <div style={{position:'absolute',top:115,left:0,right:0,textAlign:'center',fontFamily:'Georgia,serif',fontSize:27,letterSpacing:9,color:'#E7C29A',textShadow:'0 2px 9px #090605'}}>KELIR SUNYI <span style={{fontSize:18}}> / </span> EP. 01</div>
+ <div style={{position:'absolute',top:156,left:0,right:0,textAlign:'center',fontFamily:'Georgia,serif',fontSize:22,letterSpacing:4,color:'#DFC49E',textShadow:'0 2px 9px #090605'}}>{ep.title.toUpperCase()}</div>
  <Subtitle/><Soundtrack/>
  </AbsoluteFill>;
 };

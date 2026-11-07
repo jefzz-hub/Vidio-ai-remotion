@@ -41,6 +41,7 @@ export const ShotScene:React.FC<{shot:Shot;seed:number}>=({shot,seed})=>{
   {particles}
  </g>
  {shot.environment==='black'&&<g><text x="540" y="900" textAnchor="middle" fontSize="65" fill="#D2AB78" fontFamily="Georgia,serif" letterSpacing="8">BERSAMBUNG</text><path d="M420 934H660" stroke="#805125" strokeWidth="3"/></g>}
+ <g opacity=".11" pointerEvents="none">{Array.from({length:190},(_,i)=><circle key={i} cx={hash(seed+i*39)*1080} cy={hash(seed+i*131+13)*1920} r={.35+hash(seed+i*11)*1.2} fill={i%3===0?'#E7AA53':'#FAE4C1'}/>)}</g>
  <rect width="1080" height="1920" fill="url(#frameDark)" pointerEvents="none"/>
  <rect width="1080" height="1920" fill="#100B08" opacity=".065" pointerEvents="none"/>
  </svg>;

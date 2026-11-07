@@ -7,7 +7,7 @@ Karakter/rig, cahaya, latar, tekstur, shot, audio dan subtitle reusable. Komposi
 2. Tunggu pembuatan devcontainer dan postCreateCommand. Ia menginstal Node 22, FFmpeg, library Chrome, menjalankan `npm ci` dan `npx remotion browser ensure`. Setup pertama memerlukan internet. Bila terminal berhenti, jalankan `npm run setup`.
 3. Di terminal Codespaces ketik `npm run dev`. Studio dijalankan di **port 3000** tanpa membuka browser desktop.
 4. Di VS Code buka tab **PORTS** > 3000 > **Open in Browser**. Port disetel **Private** (login GitHub), jangan ubah ke Public. Buka preview di tab Android terpisah.
-5. Pilih komposisi **Kelir Sunyi / KetukanDariKolong**, scrub 0–80 detik. Editor JSON: `src/kelir/data/episode.json`; simpan (Ctrl+S atau menu save di HP), refresh Studio.
+5. Pilih komposisi **Kelir-Sunyi / KetukanDariKolong**, scrub 0–80 detik. Editor JSON: `src/kelir/data/episode.json`; simpan (Ctrl+S atau menu save di HP), refresh Studio.
 6. Jalankan pemeriksaan dan render lewat terminal (lihat di bawah). Di Explorer buka `out/`, klik kanan MP4 > **Download** untuk mengunduh ke HP.
 7. Buka **Source Control**, stage perubahan, commit, lalu **Sync Changes**. Setelah selesai, lewat GitHub Codespaces pilih **Stop Codespace** agar tidak boros kuota penggunaan.
 
