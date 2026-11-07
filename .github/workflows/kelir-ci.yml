@@ -1,4 +1,4 @@
-name: Kelir Sunyi – validate and test render
+name: Kelir Sunyi - validasi dan uji render
 on:
   workflow_dispatch:
   push:
@@ -21,8 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Refresh committed lockfile
-        shell: bash
+      - name: Refresh lockfile
         run: |
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           if ! git diff --quiet -- package-lock.json; then
@@ -30,9 +29,9 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add package-lock.json
             git commit -m "chore: refresh Remotion npm lockfile"
-            git push || echo "Tidak bisa push lockfile; commit dari Codespaces."
+            git push || echo "Simpan lockfile manual via Codespaces"
           fi
-      - name: Install probe tools
+      - name: Install FFmpeg tools
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
@@ -40,30 +39,18 @@ jobs:
       - run: npx remotion browser ensure
       - run: npm run check
       - run: npm run render:test
-      - name: Render representative frames
+      - name: Review still frames
         run: npm run render:stills
       - uses: actions/upload-artifact@v4
         with:
           name: kelir-shot-stills
           path: out/stills/*.png
           retention-days: 7
-      - name: Probe output (10s, 540x960, AAC)
+      - name: Probe output
         run: |
           ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json out/ketukan-test.mp4
-          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 out/ketukan-test.mp4 | grep '^540,960
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ketukan-test-10-detik
-          path: out/ketukan-test.mp4
-          retention-days: 7
-
-          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 out/ketukan-test.mp4 | grep '^aac
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ketukan-test-10-detik
-          path: out/ketukan-test.mp4
-          retention-days: 7
-
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 out/ketukan-test.mp4 | grep -F '540,960'
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 out/ketukan-test.mp4 | grep -F 'aac'
           DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 out/ketukan-test.mp4)
           awk -v d="$DURATION" 'BEGIN {exit !(d>=9.9 && d<=10.1)}'
       - uses: actions/upload-artifact@v4
